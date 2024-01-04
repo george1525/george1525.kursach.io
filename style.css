@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #3498db; /* Синий цвет шапки */
+    padding: 15px;
+    text-align: center;
+}
+
+header button {
+    background-color: #3498db; /* Синий цвет кнопок */
+    color: #ffffff; /* Белый цвет текста на кнопках */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: medium;
+}
+
+header button:hover {
+    background-color: #2ecc71; /* Зелёный цвет при hover */
+}

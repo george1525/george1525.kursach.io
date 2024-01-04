@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваша веб-страница</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #3498db; /* Синий цвет шапки */
+            padding: 15px;
+            text-align: center;
+        }
+
+        header button {
+            background-color: #3498db; /* Синий цвет кнопок */
+            color: #ffffff; /* Белый цвет текста на кнопках */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        header button:hover {
+            background-color: #2ecc71; /* Зелёный цвет при hover */
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+
+        video {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button>Сканировать чек</button>
+        <button>История покупок</button>
+        <button>Аналитика</button>
+    </header>
+
+    <main>
+        <video id="camera" width="100%" height="auto" autoplay></video>
+        <button onclick="scanQRCode()">Сканировать QR-код</button>
+    </main>
+
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+    <script>
+        function scanQRCode() {
+            const video = document.getElementById('camera');
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+
+                    video.addEventListener('loadedmetadata', () => {
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                        try {
+                            const result = qrcode.decode();
+                            alert('QR-код распознан: ' + result);
+                        } catch (error) {
+                            alert('QR-код не распознан. Попробуйте еще раз.');
+                        }
+
+                        stream.getTracks().forEach(track => track.stop());
+                    });
+
+                    video.play();
+                })
+                .catch((error) => {
+                    console.error('Ошибка при получении доступа к камере:', error);
+                });
+        }
+    </script>
+</body>
+</html>
+
