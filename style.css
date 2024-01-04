@@ -23,3 +23,18 @@ header button {
 header button:hover {
     background-color: #2ecc71; /* Зелёный цвет при hover */
 }
+
+
+@media only screen and (max-width: 600px) {
+    header {
+        padding: 10px;
+    }
+
+    header button {
+        padding: 8px 16px;
+    }
+
+    main {
+        margin: 10px;
+    }
+}
